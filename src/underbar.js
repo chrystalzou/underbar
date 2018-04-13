@@ -165,16 +165,16 @@
   _.reduce = function(collection, iterator, accumulator) {
     _.reduce = function(collection, iterator, accumulator) {
       var first = true;
-    _.each(collection, function(item, key, collection){
-      if(accumulator === undefined && first == true){
-        accumulator = item;
-        first = false;
-      }else{
-        accumulator = iterator(accumulator, item, key, collection);
+      _.each(collection, function(item, key, collection){
+        if(accumulator === undefined && first == true){
+          accumulator = item;
+          first = false;
+        }else{
+          accumulator = iterator(accumulator, item, key, collection);
       }
-    });
+      });
     return accumulator;
-  };
+    };
   };
 
   // Determine if the array or object contains a given value (using `===`).
@@ -192,7 +192,10 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
+    var test = iterator || _.identity;
+    return _.reduce(collection, function(startVal, item){
+      return startVal && !!test(item)
+    }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
