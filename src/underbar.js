@@ -294,6 +294,22 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var memo = {};
+    return function(){
+      var argToAdd = {};
+      _.each(arguments, function(item, key){
+          argToAdd[key] = item;
+      });
+      var args = JSON.stringify(argToAdd);
+      if(args in memo){
+        return memo[args]; //would return value a.k.a. 'result'
+      } else{
+        var result;
+        result = func.apply(this, arguments);
+        memo[args] = result;
+        return result;
+      }
+    }
   };
 
   // Delays a function for the given number of milliseconds, and then calls
