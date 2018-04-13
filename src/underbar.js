@@ -230,6 +230,13 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+        var allArgs = arguments;
+    return _.reduce(allArgs, function(startVal, indObj, key, collection){
+        _.each(indObj, function(item, key){
+          startVal[key] = item;
+        });
+      return startVal;
+    }, allArgs[0]);
   };
 
   // Like extend, but doesn't ever overwrite a key that already
